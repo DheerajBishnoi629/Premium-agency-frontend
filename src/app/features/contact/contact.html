@@ -1,0 +1,54 @@
+<section class="mx-auto max-w-7xl px-4 pb-24 pt-20 sm:px-6 sm:pt-28 lg:px-8">
+  <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+    <!-- Pitch column -->
+    <div>
+      <p class="text-sm font-semibold uppercase tracking-widest text-emerald-400">Contact</p>
+      <h1
+        id="contact-form-heading"
+        class="mt-3 text-balance text-5xl font-bold tracking-tight text-white sm:text-6xl"
+      >
+        Tell us about your project.
+      </h1>
+      <p class="mt-6 max-w-xl text-lg text-slate-300">
+        Share a few details and a senior partner will reply within 48 hours with next steps and a
+        tailored proposal.
+      </p>
+
+      <dl class="mt-10 space-y-6 border-t border-white/10 pt-10 text-sm">
+        <div class="flex items-start gap-4">
+          <span class="mt-0.5 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M5 6h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z" />
+            </svg>
+          </span>
+          <div>
+            <dt class="font-medium text-white">Email</dt>
+            <dd class="mt-1 text-slate-400">
+              <a href="mailto:hello@premium.agency" class="hover:text-emerald-300">
+                hello&#64;premium.agency
+              </a>
+            </dd>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="mt-0.5 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </span>
+          <div>
+            <dt class="font-medium text-white">Response time</dt>
+            <dd class="mt-1 text-slate-400">Within 48 hours, every weekday.</dd>
+          </div>
+        </div>
+      </dl>
+    </div>
+
+    <!-- Form column -->
+    <div
+      class="rounded-3xl border border-white/10 bg-white/[0.02] p-6 sm:p-10 lg:sticky lg:top-24 lg:self-start"
+    >
+      <app-contact-form source="contact-page" />
+    </div>
+  </div>
+</section>

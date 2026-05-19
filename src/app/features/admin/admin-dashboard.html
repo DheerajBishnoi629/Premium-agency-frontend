@@ -1,0 +1,251 @@
+<div class="min-h-screen bg-slate-950 text-slate-100">
+  <header class="border-b border-white/10 bg-slate-950/80 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <a routerLink="/" class="flex items-center gap-3" aria-label="Premium Agency — home">
+        <img
+          src="/logo.png"
+          alt="Premium Agency"
+          width="40"
+          height="40"
+          class="h-10 w-10 rounded-md object-cover ring-1 ring-white/10"
+        />
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-emerald-400">Admin</p>
+          <h1 class="mt-0.5 text-lg font-semibold text-white">Dashboard</h1>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-3">
+        @if (user(); as u) {
+          <div class="hidden text-right sm:block">
+            <p class="text-sm font-medium text-white">{{ u.name }}</p>
+            <p class="text-xs text-slate-400">{{ u.email }}</p>
+          </div>
+          <span
+            class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500/15 text-sm font-semibold text-emerald-300"
+            aria-hidden="true"
+          >
+            {{ u.name.charAt(0) }}
+          </span>
+        }
+        <button
+          type="button"
+          (click)="signOut()"
+          class="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-white transition-colors hover:border-rose-400/40 hover:bg-rose-500/10 hover:text-rose-200"
+        >
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H9m0-9H5a2 2 0 00-2 2v14a2 2 0 002 2h4" />
+          </svg>
+          Sign out
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <section>
+      <h2 class="text-3xl font-bold tracking-tight text-white">
+        @if (user(); as u) {
+          Welcome back, {{ u.name }}.
+        } @else {
+          Welcome back.
+        }
+      </h2>
+      <p class="mt-2 text-slate-400">
+        Recent activity from the public site. This panel is protected by <code class="rounded bg-white/5 px-1.5 py-0.5 text-xs">authGuard</code>.
+      </p>
+    </section>
+
+    <!-- Metric cards -->
+    <section class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      @for (metric of metrics(); track metric.id) {
+        <article
+          class="group relative overflow-hidden rounded-2xl bg-gradient-to-br p-5 ring-1 ring-inset transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/40"
+          [class]="metricAccentClass(metric.accent)"
+        >
+          <div class="relative">
+            <p class="text-xs font-semibold uppercase tracking-widest opacity-80">
+              {{ metric.label }}
+            </p>
+            <p class="mt-3 text-4xl font-bold tracking-tight text-white tabular-nums">
+              {{ metric.value }}
+            </p>
+            <p class="mt-1 text-xs text-slate-400">{{ metric.hint }}</p>
+          </div>
+          <div
+            class="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-current opacity-10 blur-2xl"
+            aria-hidden="true"
+          ></div>
+        </article>
+      }
+    </section>
+
+    <!-- Leads table -->
+    <section class="mt-10">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-widest text-slate-400">
+            Inbound leads
+          </h3>
+          <p class="mt-1 text-xs text-slate-500">
+            Showing <span class="font-semibold text-slate-300">{{ filteredLeads().length }}</span>
+            of {{ leads().length }}
+          </p>
+        </div>
+        @if (hasActiveFilters()) {
+          <button
+            type="button"
+            (click)="clearFilters()"
+            class="self-start rounded-full border border-white/15 px-3 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:border-white/30 hover:text-white"
+          >
+            Clear filters
+          </button>
+        }
+      </div>
+
+      <!-- Filters / search -->
+      <div class="mt-4 grid grid-cols-1 gap-3 rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:grid-cols-12">
+        <div class="sm:col-span-6">
+          <label for="lead-search" class="sr-only">Search leads</label>
+          <div class="relative">
+            <svg
+              class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500"
+              fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M10 18a8 8 0 110-16 8 8 0 010 16z" />
+            </svg>
+            <input
+              id="lead-search"
+              type="search"
+              placeholder="Search by name, phone, or requirement…"
+              [ngModel]="search()"
+              (ngModelChange)="search.set($event)"
+              class="w-full rounded-lg border border-white/10 bg-slate-950/60 py-2 pl-9 pr-3 text-sm text-white placeholder:text-slate-500 focus:border-emerald-400/50 focus:outline-none focus:ring-2 focus:ring-emerald-400/20"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <label for="lead-type" class="sr-only">Filter by business type</label>
+          <select
+            id="lead-type"
+            [ngModel]="typeFilter()"
+            (ngModelChange)="typeFilter.set($event)"
+            class="w-full rounded-lg border border-white/10 bg-slate-950/60 px-3 py-2 text-sm text-white focus:border-emerald-400/50 focus:outline-none focus:ring-2 focus:ring-emerald-400/20"
+          >
+            <option value="all">All business types</option>
+            @for (type of businessTypes; track type) {
+              <option [value]="type">{{ type.replace('-', ' ') }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="sm:col-span-3">
+          <div role="tablist" aria-label="Filter by status" class="flex rounded-lg border border-white/10 bg-slate-950/60 p-0.5 text-xs">
+            @for (s of statusFilters; track s) {
+              <button
+                type="button"
+                role="tab"
+                [attr.aria-selected]="statusFilter() === s"
+                (click)="statusFilter.set(s)"
+                class="flex-1 rounded-md px-2 py-1.5 font-medium capitalize transition-colors"
+                [class.bg-white]="statusFilter() === s"
+                [class.text-slate-900]="statusFilter() === s"
+                [class.text-slate-400]="statusFilter() !== s"
+                [class.hover:text-white]="statusFilter() !== s"
+              >
+                {{ s === 'all' ? 'All' : statusLabel(s) }}
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
+        @if (leads().length === 0) {
+          <div class="px-6 py-12 text-center text-sm text-slate-400">
+            No leads yet — submit the contact form on the public site to see them appear here.
+          </div>
+        } @else if (filteredLeads().length === 0) {
+          <div class="px-6 py-12 text-center text-sm text-slate-400">
+            No leads match the current filters.
+          </div>
+        } @else {
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-white/10 text-left text-sm">
+              <thead class="bg-white/[0.03] text-xs uppercase tracking-wider text-slate-400">
+                <tr>
+                  @for (col of [
+                    { id: 'name', label: 'Name' },
+                    { id: 'businessType', label: 'Business Type' },
+                    { id: 'receivedAt', label: 'Date' },
+                    { id: 'status', label: 'Status' }
+                  ]; track col.id) {
+                    <th class="px-4 py-3 font-medium">
+                      <button
+                        type="button"
+                        (click)="toggleSort($any(col.id))"
+                        class="inline-flex items-center gap-1 transition-colors hover:text-white"
+                        [attr.aria-sort]="
+                          sort().column === col.id
+                            ? (sort().direction === 'asc' ? 'ascending' : 'descending')
+                            : 'none'
+                        "
+                      >
+                        {{ col.label }}
+                        <span class="text-[10px] text-emerald-400">{{ sortIndicator($any(col.id)) }}</span>
+                      </button>
+                    </th>
+                  }
+                  <th class="px-4 py-3 font-medium">Phone</th>
+                  <th class="px-4 py-3 font-medium text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                @for (lead of filteredLeads(); track lead.id) {
+                  <tr class="transition-colors hover:bg-white/[0.03]">
+                    <td class="px-4 py-3">
+                      <div class="font-medium text-white">{{ lead.name }}</div>
+                      <div class="mt-0.5 text-xs text-slate-500 truncate max-w-xs" [title]="lead.requirement">{{ lead.requirement }}</div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 capitalize">{{ lead.businessType.replace('-', ' ') }}</td>
+                    <td class="whitespace-nowrap px-4 py-3 text-slate-400 tabular-nums">
+                      {{ lead.receivedAt | date: 'medium' }}
+                    </td>
+                    <td class="px-4 py-3">
+                      <span
+                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+                        [class]="statusBadgeClass(lead.status)"
+                      >
+                        {{ statusLabel(lead.status) }}
+                      </span>
+                    </td>
+                    <td class="whitespace-nowrap px-4 py-3 text-slate-300 tabular-nums">{{ lead.phone }}</td>
+                    <td class="whitespace-nowrap px-4 py-3 text-right">
+                      <button
+                        type="button"
+                        (click)="advanceStatus(lead)"
+                        class="inline-flex items-center gap-1 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300 transition-colors hover:border-emerald-300/60 hover:bg-emerald-500/20 hover:text-emerald-200"
+                        [attr.aria-label]="'Advance status for ' + lead.name"
+                      >
+                        @switch (lead.status) {
+                          @case ('new') { Mark as Contacted }
+                          @case ('contacted') { Mark as Converted }
+                          @case ('converted') { Reopen as New }
+                        }
+                        <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    </section>
+  </main>
+</div>

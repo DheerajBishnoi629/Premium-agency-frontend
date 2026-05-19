@@ -1,0 +1,237 @@
+<!-- Hero -->
+<section class="relative isolate overflow-hidden">
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div class="absolute left-1/2 top-[-10rem] h-[40rem] w-[80rem] -translate-x-1/2 rounded-full bg-gradient-to-br from-emerald-500/20 via-emerald-500/5 to-transparent blur-3xl"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,theme(colors.white/4)_1px,transparent_1px)] [background-size:24px_24px] opacity-40"></div>
+  </div>
+
+  <div class="mx-auto max-w-7xl px-4 pb-16 pt-20 sm:px-6 sm:pt-28 lg:px-8 lg:pt-32">
+    <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-300 backdrop-blur">
+      <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+      Now booking projects for June 2026
+    </div>
+
+    <h1 class="mt-6 max-w-4xl text-balance text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
+      Get more customers
+      <span class="bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent">
+        online.
+      </span>
+    </h1>
+
+    <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl">
+      Websites, online stores and Google rankings for Indian businesses.
+      Fast to launch, fair pricing, and built to bring real enquiries.
+    </p>
+
+    <div class="mt-10 flex flex-wrap items-center gap-3">
+      <a
+        [href]="whatsapp.href()"
+        target="_blank"
+        rel="noopener"
+        class="group inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/20 transition-all hover:-translate-y-0.5 hover:bg-emerald-400 hover:shadow-emerald-500/40"
+      >
+        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20.52 3.48A11.93 11.93 0 0012.04 0C5.48 0 .14 5.34.14 11.9c0 2.1.55 4.14 1.6 5.95L0 24l6.34-1.66a11.86 11.86 0 005.7 1.45h.01c6.56 0 11.9-5.34 11.9-11.9 0-3.18-1.24-6.17-3.43-8.4zM12.05 21.5a9.6 9.6 0 01-4.9-1.34l-.35-.21-3.76.99 1-3.66-.23-.38a9.55 9.55 0 1117.93-4.7c0 5.3-4.32 9.6-9.69 9.6zm5.27-7.18c-.29-.14-1.7-.84-1.96-.94-.26-.1-.45-.14-.64.14-.19.29-.74.94-.9 1.13-.17.19-.33.21-.62.07-.29-.14-1.21-.45-2.3-1.42-.85-.76-1.43-1.7-1.6-1.99-.17-.29-.02-.45.12-.6.13-.13.29-.33.43-.5.14-.16.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.55-.88-2.12-.23-.55-.46-.48-.64-.49l-.55-.01c-.19 0-.5.07-.76.36-.26.29-1 .98-1 2.39 0 1.41 1.03 2.78 1.17 2.97.14.19 2.03 3.1 4.92 4.34.69.3 1.22.48 1.64.61.69.22 1.31.19 1.81.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z"/>
+        </svg>
+        Chat on WhatsApp
+      </a>
+      <a
+        routerLink="/contact"
+        class="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/30 hover:bg-white/5"
+      >
+        Get a free quote
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+      <a
+        routerLink="/portfolio"
+        class="inline-flex items-center gap-2 px-2 py-3 text-sm font-medium text-slate-300 transition-colors hover:text-white"
+      >
+        See our work
+      </a>
+    </div>
+
+    <!-- Trust badges -->
+    <ul class="mt-10 flex flex-wrap gap-x-6 gap-y-3">
+      @for (badge of trustBadges; track badge.label) {
+        <li class="inline-flex items-center gap-2 text-sm text-slate-300">
+          <svg class="h-4 w-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="badge.icon" />
+          </svg>
+          {{ badge.label }}
+        </li>
+      }
+    </ul>
+  </div>
+
+  <!-- Stats -->
+  <div class="border-t border-white/10 bg-white/[0.02]">
+    <dl class="mx-auto grid max-w-7xl grid-cols-2 gap-px bg-white/10 sm:grid-cols-4">
+      @for (stat of stats; track stat.label) {
+        <div class="bg-slate-950 px-6 py-8">
+          <dt class="text-xs font-medium uppercase tracking-widest text-slate-400">{{ stat.label }}</dt>
+          <dd class="mt-2 text-3xl font-semibold text-white sm:text-4xl">{{ stat.value }}</dd>
+        </div>
+      }
+    </dl>
+  </div>
+</section>
+
+<!-- Features grid -->
+<section class="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+  <div class="max-w-2xl">
+    <p class="text-sm font-semibold uppercase tracking-widest text-emerald-400">Why us</p>
+    <h2 class="mt-3 text-4xl font-bold tracking-tight text-white sm:text-5xl">
+      Everything your business needs to win online.
+    </h2>
+    <p class="mt-4 text-lg text-slate-300">
+      Built for Indian businesses — fast, mobile-friendly, and made to bring real customers.
+    </p>
+  </div>
+
+  <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    @for (item of features; track item.title) {
+      <article class="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-8 transition-all hover:-translate-y-1 hover:border-emerald-400/40 hover:bg-white/[0.04]">
+        <div class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/10 opacity-0 transition-opacity group-hover:opacity-100"></div>
+        <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="item.icon" />
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-semibold text-white">{{ item.title }}</h3>
+        <p class="mt-3 text-sm leading-relaxed text-slate-400">{{ item.description }}</p>
+      </article>
+    }
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+  <div class="rounded-3xl border border-white/10 bg-white/[0.02] px-6 py-12 sm:px-12">
+    <div class="max-w-2xl">
+      <p class="text-sm font-semibold uppercase tracking-widest text-emerald-400">How it works</p>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        From idea to live site in 3 simple steps.
+      </h2>
+    </div>
+
+    <ol class="mt-10 grid gap-6 sm:grid-cols-3">
+      @for (step of steps; track step.number) {
+        <li class="relative rounded-2xl border border-white/10 bg-slate-950/50 p-6">
+          <span class="text-xs font-mono font-semibold text-emerald-400">{{ step.number }}</span>
+          <h3 class="mt-2 text-lg font-semibold text-white">{{ step.title }}</h3>
+          <p class="mt-2 text-sm text-slate-400">{{ step.description }}</p>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<!-- Customer reviews -->
+<section class="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+  <div class="max-w-2xl">
+    <p class="text-sm font-semibold uppercase tracking-widest text-emerald-400">Real reviews</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+      Indian businesses, real results.
+    </h2>
+    <p class="mt-4 text-slate-300">
+      We have helped 200+ small and medium businesses across India get online and grow. Here is what a few of them said.
+    </p>
+  </div>
+
+  <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    @for (review of reviews; track review.name) {
+      <article class="relative flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-6 transition-all hover:-translate-y-1 hover:border-emerald-400/40">
+        <div class="flex gap-0.5 text-emerald-400" aria-label="5 star rating">
+          @for (star of [1,2,3,4,5]; track star) {
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M10 1l2.928 5.934 6.547.951-4.737 4.617 1.118 6.518L10 16.95l-5.856 3.07 1.118-6.518L.525 7.885l6.547-.951L10 1z"/>
+            </svg>
+          }
+        </div>
+        <blockquote class="mt-4 flex-1 text-sm leading-relaxed text-slate-200">
+          &ldquo;{{ review.quote }}&rdquo;
+        </blockquote>
+        <div class="mt-6 flex items-center gap-3 border-t border-white/5 pt-4">
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/15 text-sm font-semibold text-emerald-300" aria-hidden="true">
+            {{ review.initial }}
+          </span>
+          <div>
+            <p class="text-sm font-semibold text-white">{{ review.name }}</p>
+            <p class="text-xs text-slate-400">{{ review.business }} &middot; {{ review.city }}</p>
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+  <div class="grid gap-10 lg:grid-cols-12">
+    <div class="lg:col-span-4">
+      <p class="text-sm font-semibold uppercase tracking-widest text-emerald-400">FAQ</p>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        Common questions, straight answers.
+      </h2>
+      <p class="mt-4 text-slate-300">
+        Still have a doubt? <a [href]="whatsapp.href()" target="_blank" rel="noopener" class="font-medium text-emerald-400 hover:text-emerald-300">Ask on WhatsApp</a> &mdash; we reply within an hour during shop hours.
+      </p>
+    </div>
+
+    <div class="lg:col-span-8">
+      <div class="divide-y divide-white/10 rounded-2xl border border-white/10 bg-white/[0.02]">
+        @for (faq of faqs; track faq.question; let first = $first) {
+          <details class="group" [attr.open]="first ? '' : null">
+            <summary class="flex cursor-pointer list-none items-start justify-between gap-4 px-6 py-5 text-left font-medium text-white transition-colors hover:bg-white/[0.03]">
+              <span>{{ faq.question }}</span>
+              <svg class="mt-0.5 h-5 w-5 flex-none text-emerald-400 transition-transform duration-200 group-open:rotate-45" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+              </svg>
+            </summary>
+            <div class="px-6 pb-6 text-sm leading-relaxed text-slate-300">
+              {{ faq.answer }}
+            </div>
+          </details>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / inline lead form -->
+<section class="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+  <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950 px-6 py-12 sm:px-12 sm:py-16">
+    <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-emerald-500/20 blur-3xl" aria-hidden="true"></div>
+
+    <div class="relative grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-16">
+      <div>
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          Ready to get more enquiries?
+        </h2>
+        <p class="mt-4 max-w-md text-lg text-slate-300">
+          Send your details and we'll share a fixed-price proposal within 48 hours. No obligation, no fees.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            [href]="whatsapp.href()"
+            target="_blank"
+            rel="noopener"
+            class="rounded-full bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-slate-950 transition-transform hover:-translate-y-0.5"
+          >
+            WhatsApp us now
+          </a>
+          <a
+            routerLink="/pricing"
+            class="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/5"
+          >
+            View pricing
+          </a>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-white/10 bg-slate-950/40 p-6 sm:p-8 backdrop-blur">
+        <app-contact-form source="home-cta" />
+      </div>
+    </div>
+  </div>
+</section>

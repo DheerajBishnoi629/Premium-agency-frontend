@@ -1,0 +1,198 @@
+@if (status() === 'success') {
+  <div
+    role="status"
+    aria-live="polite"
+    class="rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-8 text-center"
+  >
+    <div
+      class="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400 text-slate-950"
+    >
+      <svg
+        class="h-6 w-6"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <h3 class="mt-4 text-2xl font-semibold text-white">Thank you — we got your message!</h3>
+    <p class="mt-2 text-slate-300">
+      Our team will call you back within 24 hours. Need something urgent? Ping us on WhatsApp.
+    </p>
+    <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+      <a
+        [href]="whatsapp.href()"
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2 text-sm font-semibold text-slate-950 transition-colors hover:bg-emerald-400"
+      >
+        Chat on WhatsApp
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+      <button
+        type="button"
+        (click)="reset()"
+        class="inline-flex rounded-full border border-white/15 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white/5"
+      >
+        Send another message
+      </button>
+    </div>
+  </div>
+} @else {
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    novalidate
+    class="space-y-6"
+    aria-labelledby="contact-form-heading"
+  >
+    <!-- Name -->
+    <div>
+      <label for="cf-name" class="block text-sm font-medium text-slate-200">Your name</label>
+      <input
+        id="cf-name"
+        type="text"
+        autocomplete="name"
+        formControlName="name"
+        [attr.aria-invalid]="isInvalid('name')"
+        aria-describedby="cf-name-error"
+        class="mt-2 block w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-white placeholder-slate-500 transition-colors focus:outline-none focus:ring-2"
+        [class]="
+          isInvalid('name')
+            ? 'border-rose-400/60 focus:border-rose-400 focus:ring-rose-400/30'
+            : 'border-white/10 focus:border-emerald-400 focus:ring-emerald-400/30'
+        "
+        placeholder="e.g. Rahul Sharma"
+      />
+      @if (errorFor('name'); as msg) {
+        <p id="cf-name-error" class="mt-2 text-xs text-rose-300">{{ msg }}</p>
+      }
+    </div>
+
+    <!-- Phone -->
+    <div>
+      <label for="cf-phone" class="block text-sm font-medium text-slate-200">Mobile number</label>
+      <input
+        id="cf-phone"
+        type="tel"
+        inputmode="tel"
+        autocomplete="tel"
+        formControlName="phone"
+        [attr.aria-invalid]="isInvalid('phone')"
+        aria-describedby="cf-phone-error"
+        class="mt-2 block w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-white placeholder-slate-500 transition-colors focus:outline-none focus:ring-2"
+        [class]="
+          isInvalid('phone')
+            ? 'border-rose-400/60 focus:border-rose-400 focus:ring-rose-400/30'
+            : 'border-white/10 focus:border-emerald-400 focus:ring-emerald-400/30'
+        "
+        placeholder="e.g. 98765 43210"
+      />
+      @if (errorFor('phone'); as msg) {
+        <p id="cf-phone-error" class="mt-2 text-xs text-rose-300">{{ msg }}</p>
+      }
+    </div>
+
+    <!-- Business type -->
+    <div>
+      <label for="cf-type" class="block text-sm font-medium text-slate-200">Business type</label>
+      <div class="relative mt-2">
+        <select
+          id="cf-type"
+          formControlName="businessType"
+          [attr.aria-invalid]="isInvalid('businessType')"
+          aria-describedby="cf-type-error"
+          class="block w-full appearance-none rounded-xl border bg-white/[0.03] px-4 py-3 pr-10 text-white transition-colors focus:outline-none focus:ring-2"
+          [class]="
+            isInvalid('businessType')
+              ? 'border-rose-400/60 focus:border-rose-400 focus:ring-rose-400/30'
+              : 'border-white/10 focus:border-emerald-400 focus:ring-emerald-400/30'
+          "
+        >
+          <option value="" disabled class="bg-slate-900">Select your business…</option>
+          @for (opt of businessTypes; track opt.value) {
+            <option [value]="opt.value" class="bg-slate-900">{{ opt.label }}</option>
+          }
+        </select>
+        <svg
+          class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
+        </svg>
+      </div>
+      @if (errorFor('businessType'); as msg) {
+        <p id="cf-type-error" class="mt-2 text-xs text-rose-300">{{ msg }}</p>
+      }
+    </div>
+
+    <!-- Requirement -->
+    <div>
+      <div class="flex items-center justify-between">
+        <label for="cf-req" class="block text-sm font-medium text-slate-200">
+          What do you need?
+        </label>
+        <span class="text-xs text-slate-500">{{ requirementLength() }} / 1000</span>
+      </div>
+      <textarea
+        id="cf-req"
+        rows="5"
+        formControlName="requirement"
+        [attr.aria-invalid]="isInvalid('requirement')"
+        aria-describedby="cf-req-error"
+        class="mt-2 block w-full resize-y rounded-xl border bg-white/[0.03] px-4 py-3 text-white placeholder-slate-500 transition-colors focus:outline-none focus:ring-2"
+        [class]="
+          isInvalid('requirement')
+            ? 'border-rose-400/60 focus:border-rose-400 focus:ring-rose-400/30'
+            : 'border-white/10 focus:border-emerald-400 focus:ring-emerald-400/30'
+        "
+        placeholder="e.g. I run a sweet shop in Pune and want a website with online ordering and WhatsApp catalogue."
+      ></textarea>
+      @if (errorFor('requirement'); as msg) {
+        <p id="cf-req-error" class="mt-2 text-xs text-rose-300">{{ msg }}</p>
+      }
+    </div>
+
+    @if (errorMessage(); as err) {
+      <div
+        role="alert"
+        class="rounded-xl border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200"
+      >
+        {{ err }}
+      </div>
+    }
+
+    <button
+      type="submit"
+      [disabled]="status() === 'submitting'"
+      class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/20 transition-all hover:-translate-y-0.5 hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:w-auto"
+    >
+      @if (status() === 'submitting') {
+        <svg
+          class="h-4 w-4 animate-spin"
+          fill="none"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" />
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v3a5 5 0 00-5 5H4z"
+          />
+        </svg>
+        Sending…
+      } @else {
+        Send message
+        <span aria-hidden="true">&rarr;</span>
+      }
+    </button>
+  </form>
+}
